@@ -42,11 +42,6 @@ const Compra = mongoose.model("compras", {
   fecha: { type: Date, default: Date.now }
 });
 
-
-// ======================================
-// RUTAS
-// ======================================
-
 // === Registrar usuario ===
 app.post("/register", async (req, res) => {
   try {
