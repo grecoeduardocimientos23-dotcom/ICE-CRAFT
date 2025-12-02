@@ -1,0 +1,326 @@
+<!-- Documento actualizado: Menú Ice Craft mejorado -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Menú | Ice Craft</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg: #f4ebe8;
+      --primary: #c4927c;
+      --dark: #2c2c2c;
+      --light: #fff;
+      --card-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    }
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Poppins', sans-serif;
+    }
+
+    body{
+      background: var(--bg);
+      padding: 20px;
+      animation: fadeIn 1.2s ease;
+    }
+
+    @keyframes fadeIn{
+      from{ opacity:0; }
+      to{ opacity:1; }
+    }
+
+    header{
+      background: var(--primary);
+      padding: 25px;
+      text-align:center;
+      color:white;
+      font-size: 2rem;
+      letter-spacing: 1.5px;
+      border-radius: 12px;
+      box-shadow: var(--card-shadow);
+    }
+
+    .menu-section{
+      max-width: 1100px;
+      margin: 35px auto;
+      background: var(--light);
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: var(--card-shadow);
+      transition: .3s;
+    }
+
+    .menu-section:hover{
+      transform: scale(1.01);
+    }
+
+    h2{
+      text-align:center;
+      color: var(--primary);
+      font-size: 2rem;
+      margin-bottom: 18px;
+    }
+
+    table{
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead{
+      background:#111827;
+      color:white;
+    }
+
+    th, td{
+      padding: 15px;
+      text-align:center;
+      border-bottom:1px solid #ddd;
+      font-size: 1rem;
+    }
+
+    img{
+      width: 95px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    button.compra-btn{
+      padding: 8px 15px;
+      background:#c4927c;
+      color:white;
+      border:none;
+      border-radius:8px;
+      cursor:pointer;
+      transition:.3s;
+    }
+
+    button.compra-btn:hover{
+      background:#a77460;
+    }
+
+    .regresar{
+      text-align:center;
+      margin-top: 40px;
+    }
+
+    .regresar a{
+      font-size: 1.4rem;
+      font-weight:600;
+      color:#003a80;
+      text-decoration:none;
+      transition: .3s;
+    }
+
+    .regresar a:hover{
+      letter-spacing:1px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>MENÚ ICE CRAFT</header>
+
+<!-- ========================== -->
+<!--       BEBIDAS ESPECIALES    -->
+<!-- ========================== -->
+<section class="menu-section">
+  <h2>Bebidas Especiales</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Precio</th>
+        <th>Imagen</th>
+        <th>Comprar</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td>Capuchino</td>
+        <td>Clásico, aroma intenso y espuma cremosa</td>
+        <td>45</td>
+        <td><img src="imagenes/capuchino.jpg"></td>
+        <td><button class="compra-btn" onclick="enviarCompra('Capuchino', 45)">Comprar</button></td>
+      </tr>
+
+      <tr>
+        <td>Latte Vainilla</td>
+        <td>Suave con un toque dulce de vainilla premium</td>
+        <td>50</td>
+        <td><img src="imagenes/latte.jpg"></td>
+        <td><button class="compra-btn" onclick="enviarCompra('Latte Vainilla', 50)">Comprar</button></td>
+      </tr>
+
+      <tr>
+        <td>Moka</td>
+        <td>Deliciosa mezcla de café y chocolate gourmet</td>
+        <td>55</td>
+        <td><img src="imagenes/moka.jpg"></td>
+        <td><button class="compra-btn" onclick="enviarCompra('Moka', 55)">Comprar</button></td>
+      </tr>
+
+      <tr>
+        <td>Caramel Latte</td>
+        <td>Endulzado con caramelo hecho en casa</td>
+        <td>52</td>
+        <td><img src="imagenes/caramel-latte.jpg"></td>
+        <td><button class="compra-btn" onclick="enviarCompra('Caramel Latte', 52)">Comprar</button></td>
+      </tr>
+
+      <tr>
+        <td>Matcha Latte</td>
+        <td>Té verde japonés con leche espumosa</td>
+        <td>58</td>
+        <td><img src="imagenes/matcha.jpg"></td>
+        <td><button class="compra-btn" onclick="enviarCompra('Matcha Latte', 58)">Comprar</button></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ========================== -->
+<!--     BEBIDAS FRÍAS          -->
+<!-- ========================== -->
+<section class="menu-section">
+  <h2>Bebidas Frías</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Precio</th>
+        <th>Imagen</th>
+        <th>Comprar</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td>Frappe Mocha</td>
+        <td>Helado, cremoso y con chocolate</td>
+        <td>65</td>
+        <td><img src="imagenes/frappe-moka.jpg"></td>
+        <td><button class="compra-btn" onclick="enviarCompra('Frappe Mocha', 65)">Comprar</button></td>
+      </tr>
+
+      <tr>
+        <td>Frappe Oreo</td>
+        <td>Galleta Oreo, crema batida y chocolate</td>
+        <td>70</td>
+        <td><img src="imagenes/frappe-oreo.jpg"></td>
+        <td><button class="compra-btn" onclick="enviarCompra('Frappe Oreo', 70)">Comprar</button></td>
+      </tr>
+
+      <tr>
+        <td>Caramel Frappe</td>
+        <td>Dulce, frío y perfecto para el clima cálido</td>
+        <td>68</td>
+        <td><img src="imagenes/frappe-caramel.jpg"></td>
+        <td><button class="compra-btn" onclick="enviarCompra('Caramel Frappe', 68)">Comprar</button></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ========================== -->
+<!--     POSTRES Y SNACKS       -->
+<!-- ========================== -->
+<section class="menu-section">
+  <h2>Postres y Snacks</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Precio</th>
+        <th>Imagen</th>
+        <th>Comprar</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td>Pay de Queso</td>
+        <td>Suave, cremoso y horneado al momento</td>
+        <td>40</td>
+        <td><img src="imagenes/pay.jpg"></td>
+        <td><button class="compra-btn" onclick="enviarCompra('Pay de Queso', 40)">Comprar</button></td>
+      </tr>
+
+      <tr>
+        <td>Brownie</td>
+        <td>Chocolate intenso y textura perfecta</td>
+        <td>35</td>
+        <td><img src="imagenes/brownie.jpg"></td>
+        <td><button class="compra-btn" onclick="enviarCompra('Brownie', 35)">Comprar</button></td>
+      </tr>
+
+      <tr>
+        <td>Galletas Artesanales</td>
+        <td>Hechas con receta casera tradicional</td>
+        <td>25</td>
+        <td><img src="imagenes/galletas.jpg"></td>
+        <td><button class="compra-btn" onclick="enviarCompra('Galletas Artesanales', 25)">Comprar</button></td>
+      </tr>
+
+      <tr>
+        <td>Cheesecake Fresa</td>
+        <td>Base crujiente y topping de fresa natural</td>
+        <td>48</td>
+        <td><img src="imagenes/cheesecake.jpg"></td>
+        <td><button class="compra-btn" onclick="enviarCompra('Cheesecake Fresa', 48)">Comprar</button></td>
+      </tr>
+
+      <tr>
+        <td>Panque de Plátano</td>
+        <td>Dulce, suave y perfecto para acompañar</td>
+        <td>30</td>
+        <td><img src="imagenes/panque.jpg"></td>
+        <td><button class="compra-btn" onclick="enviarCompra('Panque de Plátano', 30)">Comprar</button></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ===================================== -->
+<!--          FUNCIÓN DE COMPRAS           -->
+<!-- ===================================== -->
+<script>
+function enviarCompra(producto, precio) {
+    const usuario = localStorage.getItem("usuarioNombre") || "Invitado";
+
+    const datos = {
+        usuario: usuario,
+        producto,
+        cantidad: 1,
+        total: precio
+    };
+
+    fetch("http://localhost:3000/compras", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(datos)
+    })
+    .then(res => res.text())
+    .then(msg => alert("Compra registrada para: " + usuario))
+    .catch(err => alert("❌ Error al registrar compra: " + err));
+}
+</script>
+
+
+
+<div class="regresar">
+  <a href="CAFETERIA1.HTML">Regresar</a>
+</div>
+
+</body>
+</html>

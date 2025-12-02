@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Cafetería</title>
+
+    <style>
+        body {
+            background: #f5c7a1;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-box {
+            background: white;
+            padding: 25px;
+            width: 320px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #0003;
+            text-align: center;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #bbb;
+            font-size: 16px;
+        }
+
+        button {
+            background: #ff914d;
+            border: none;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background: #d76d2a;
+        }
+
+        .link {
+            background: #3a7df1;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-box">
+    <h2>Iniciar Sesión</h2>
+
+    <input id="usuario" type="text" placeholder="Usuario">
+    <input id="password" type="password" placeholder="Contraseña">
+
+    <button onclick="login()">Entrar</button>
+
+    <button class="link" onclick="location.href='nuevo_usu.html'">
+        Crear nuevo usuario
+    </button>
+
+    <button class="link" style="background:#d9534f" onclick="location.href='eliminar_usu.html'">
+    Eliminar usuario
+</button>
+
+</div>
+
+<script>
+function login() {
+    const usuario = document.getElementById("usuario").value.trim();
+    const password = document.getElementById("password").value.trim();
+
+    if (!usuario || !password) {
+        alert("Por favor llena todos los campos.");
+        return;
+    }
+
+    fetch("http://localhost:3000/usuarios/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ usuario, password })
+    })
+    .then(res => res.json())
+    .then(data => {
+
+        if (!data.ok) {
+            alert(data.mensaje || "Usuario o contraseña incorrectos");
+            return;
+        }
+
+        // Guardamos sesión
+        localStorage.setItem("usuario", data.nombre);
+
+        // REDIRECCIÓN SEGÚN ROL
+        if (data.rol === "admin") {
+            window.location.href = "informe.html";
+        } else {
+            window.location.href = "CAFETERIA1.HTML";
+        }
+    })
+    .catch(() => alert("Error al conectar con el servidor"));
+}
+</script>
+
+</body>
+</html>

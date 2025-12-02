@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Informes de Compra</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #f7e5d8;
+            --primary: #b86d47;
+            --primary-dark: #8c4f30;
+            --success: #318313;
+            --danger-dark: #b52b27;
+        }
+
+        body {
+            background: var(--bg);
+            padding: 30px;
+            font-family: "Poppins", sans-serif;
+        }
+
+        h2 {
+            text-align: center;
+            color: var(--primary-dark);
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .contenedor {
+            width: 90%;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn {
+            padding: 10px 18px;
+            background: var(--primary);
+            border: none;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            margin-right: 10px;
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: var(--primary);
+            color: white;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .btn-eliminar {
+            background: var(--success);
+            padding: 7px 14px;
+            border-radius: 6px;
+            border: none;
+            color: white;
+        }
+
+        .btn-editar {
+            background: #1d74c7;
+            padding: 7px 14px;
+            border-radius: 6px;
+            border: none;
+            color: white;
+            margin-right: 6px;
+        }
+
+        /* ===== MODAL ===== */
+        #modal, #modalAgregar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.55);
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #modal-content {
+            background: white;
+            padding: 20px;
+            width: 350px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #aaa;
+            border-radius: 6px;
+        }
+
+        #btnGuardar, #btnAgregarCompra, #btnCancelarCompra {
+            background: var(--primary);
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: none;
+            color: white;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>Historial de Compras</h2>
+
+<div class="contenedor">
+    <button class="btn" onclick="cargarCompras()">Cargar Informes</button>
+    <button class="btn" onclick="abrirModalAgregar()">Registrar Compra</button>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Usuario</th>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Total</th>
+                <th>Fecha</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+
+        <tbody id="bodyTabla"></tbody>
+    </table>
+</div>
+
+<!-- ========== MODAL DE EDICIÓN ========== -->
+<div id="modal">
+    <div id="modal-content">
+        <h3>Editar Compra</h3>
+
+        <input id="editUsuario" placeholder="Usuario">
+        <input id="editProducto" placeholder="Producto">
+        <input id="editCantidad" type="number" placeholder="Cantidad">
+        <input id="editTotal" type="number" placeholder="Total">
+
+        <button id="btnGuardar" onclick="guardarCambios()">Guardar Cambios</button>
+    </div>
+</div>
+
+<!-- ========== MODAL AGREGAR COMPRA ========== -->
+<div id="modalAgregar">
+    <div id="modal-content">
+        <h3>Registrar Compra Física</h3>
+
+        <input id="addUsuario" placeholder="Usuario">
+        <input id="addProducto" placeholder="Producto">
+        <input id="addCantidad" type="number" placeholder="Cantidad">
+        <input id="addTotal" type="number" placeholder="Total">
+
+        <button id="btnAgregarCompra" onclick="agregarCompra()">Guardar Compra</button>
+        <button id="btnCancelarCompra" onclick="cancelarCompra()">Cancelar</button>
+    </div>
+</div>
+
+<script>
+const API_URL = "http://localhost:3000/compras";
+let idEditar = "";
+
+// ================= CARGAR COMPRAS =================
+function cargarCompras() {
+    fetch(API_URL)
+        .then(res => res.json())
+        .then(data => {
+            const cuerpo = document.getElementById("bodyTabla");
+            cuerpo.innerHTML = "";
+
+            data.forEach(c => {
+                const fila = `
+                <tr>
+                    <td>${c.usuario}</td>
+                    <td>${c.producto}</td>
+                    <td>${c.cantidad}</td>
+                    <td>$${c.total}</td>
+                    <td>${new Date(c.fecha).toLocaleString()}</td>
+                    <td>
+                        <button class="btn-editar"
+                            onclick="abrirModal('${c._id}', '${c.usuario}', '${c.producto}', '${c.cantidad}', '${c.total}')">
+                            Editar
+                        </button>
+
+                        <button class="btn-eliminar" onclick="eliminarCompra('${c._id}')">
+                            Completado
+                        </button>
+                    </td>
+                </tr>`;
+                cuerpo.innerHTML += fila;
+            });
+        });
+}
+
+// ==================== ABRIR MODAL EDITAR ====================
+function abrirModal(id, usuario, producto, cantidad, total) {
+    idEditar = id;
+
+    document.getElementById("editUsuario").value = usuario;
+    document.getElementById("editProducto").value = producto;
+    document.getElementById("editCantidad").value = Number(cantidad);
+    document.getElementById("editTotal").value = Number(total);
+
+    document.getElementById("modal").style.display = "flex";
+}
+
+// ==================== GUARDAR EDICIÓN ====================
+async function guardarCambios() {
+    const datos = {
+        usuario: document.getElementById("editUsuario").value.trim(),
+        producto: document.getElementById("editProducto").value.trim(),
+        cantidad: Number(document.getElementById("editCantidad").value),
+        total: Number(document.getElementById("editTotal").value)
+    };
+
+    const url = `${API_URL}/${idEditar}`;
+    
+    const res = await fetch(url, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(datos)
+    });
+
+    alert("Compra actualizada");
+    document.getElementById("modal").style.display = "none";
+    cargarCompras();
+}
+
+// ==================== ELIMINAR COMPRA ====================
+async function eliminarCompra(id) {
+    if (!confirm("¿Marcar compra como completada?")) return;
+
+    await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+
+    alert("Compra marcada como completada");
+    cargarCompras();
+}
+
+// ==================== ABRIR MODAL AGREGAR ====================
+function abrirModalAgregar() {
+    document.getElementById("modalAgregar").style.display = "flex";
+}
+
+// ==================== AGREGAR COMPRA ====================
+async function agregarCompra() {
+    const datos = {
+        usuario: document.getElementById("addUsuario").value.trim(),
+        producto: document.getElementById("addProducto").value.trim(),
+        cantidad: Number(document.getElementById("addCantidad").value),
+        total: Number(document.getElementById("addTotal").value)
+    };
+
+    await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(datos)
+    });
+
+    alert("Compra registrada");
+    document.getElementById("modalAgregar").style.display = "none";
+    cargarCompras();
+}
+// ==================== CANCELAR COMPRA ====================
+function cancelarCompra() {
+    document.getElementById("modalAgregar").style.display = "none";
+
+    // Opcional: limpiar campos
+    document.getElementById("addUsuario").value = "";
+    document.getElementById("addProducto").value = "";
+    document.getElementById("addCantidad").value = "";
+    document.getElementById("addTotal").value = "";
+}
+
+</script>
+</body>
+</html>

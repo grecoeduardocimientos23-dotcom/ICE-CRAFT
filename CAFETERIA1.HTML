@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Ice Craft - Cafetería</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #f4ebe8;
+      --primary: #c4927c;
+      --primary-dark: #a47462;
+      --text-dark: #2c2c2c;
+      --text-light: #6f6f6f;
+      --card: #ffffff;
+      --accent: #8b5e3c;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text-dark);
+      overflow-x: hidden;
+      animation: fadeIn 1s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /*------------ HEADER -------------*/
+    header {
+      background: var(--primary);
+      padding: 25px;
+      text-align: center;
+      font-size: 32px;
+      color: black;
+      font-weight: 700;
+      box-shadow: 0 2px 15px rgba(0,0,0,0.15);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    nav {
+      margin-top: 10px;
+    }
+
+    nav a {
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: 600;
+      color: #fff;
+      transition: .3s;
+    }
+
+    nav a:hover {
+      color: var(--accent);
+    }
+
+    /*------------ SECCIONES -------------*/
+    .section {
+      max-width: 900px;
+      margin: 50px auto;
+      background: var(--card);
+      padding: 35px;
+      border-radius: 15px;
+      box-shadow: 0 4px 25px rgba(0,0,0,0.12);
+      transition: .3s;
+    }
+
+    .section:hover {
+      transform: translateY(-5px);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 15px;
+      color: var(--primary-dark);
+      font-size: 28px;
+      font-weight: 700;
+    }
+
+    p {
+      font-size: 1.1rem;
+      color: var(--text-dark);
+      text-align: justify;
+    }
+
+    .img-center {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .img-center img {
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    /*------------ COMENTARIOS -------------*/
+    textarea {
+      width: 100%;
+      height: 90px;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      resize: none;
+      font-size: 1rem;
+      outline: none;
+      transition: .3s;
+    }
+
+    textarea:focus {
+      border-color: var(--primary-dark);
+      box-shadow: 0 0 8px rgba(196,146,124,0.4);
+    }
+
+    button {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      background-color: var(--primary-dark);
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: .3s;
+      font-weight: 600;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background: var(--accent);
+    }
+
+    .comentario {
+      background: #f4f4f4;
+      padding: 12px;
+      border-radius: 10px;
+      margin-top: 10px;
+      animation: slideIn .3s ease;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /*------------ FOOTER -------------*/
+    footer {
+      margin-top: 50px;
+      background: var(--accent);
+      color: white;
+      text-align: center;
+      padding: 20px;
+      font-size: 1.1rem;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  CAFETERÍA ICE CRAFT
+  <nav>
+    <a href="#inicio">INTRODUCCIÓN</a>
+    <a href="#historia">HISTORIA</a>
+    <a href="#menu">MENÚ</a>
+    <a href="#formulario">COMENTARIOS</a>
+  </nav>
+</header>
+
+<!-- ================= INTRO ================= -->
+<section id="inicio" class="section">
+  <h2>Introducción</h2>
+  <p>
+   En nuestra cafetería buscamos ofrecer un ambiente cómodo, cálido y totalmente agradable, donde cada persona pueda disfrutar de una
+    deliciosa taza de café y sentirse en un espacio especial. Nos enfocamos en cuidar cada detalle, desde la selección de ingredientes 
+    y la preparación de nuestras bebidas, hasta la ambientación del lugar y la atención que brindamos. Queremos que cada visita sea más
+   que una simple parada: que sea un momento de paz, de disfrute y de conexión. 
+   Nuestro objetivo es que cada cliente viva una experiencia única, auténtica y llena de sabor, que lo invite a regresar una y otra vez.
+  </p>
+  <div class="img-center">
+    <img src="" width="250" height="150">
+  </div>
+</section>
+
+<!-- ================= HISTORIA ================= -->
+<section id="historia" class="section">
+  <h2>Historia</h2>
+  <p>
+   Fundada en 2002 por los esposos Vargas, Ice Craft nació como un sueño familiar que buscaba combinar el amor por las bebidas dulces
+    con un ambiente realmente acogedor. Lo que comenzó como una pequeña idea entre conversaciones y recetas caseras,
+     pronto se convirtió en un proyecto lleno de pasión y dedicación. Desde sus primeros días,la cafetería 
+    fue creada para ser mucho más que un lugar donde tomar café: queríamos ofrecer un espacio donde las personas pudieran relajarse,
+     compartir momentos especiales y sentirse como en casa. Con el paso de los años, Ice Craft ha crecido,
+    pero nunca ha perdido su esencia familiar ni ese toque cálido que hace que cada visitante se sienta bienvenido desde que cruza la puerta.
+  </p>
+  <div class="img-center">
+    <img src="" width="220" height="140">
+  </div>
+</section>
+
+<!-- ================= MENÚ ================= -->
+<section id="menu" class="section">
+  <h2>Menú</h2>
+  <p style="text-align:center;">
+    <a href="file:///C:/Users/greco/OneDrive/Desktop/cafeteria-backend/MENU.HTML" style="color: var(--accent); font-size:1.2rem; font-weight:600;">Ver Menú Completo</a>
+  </p>
+</section>
+
+<!-- ================= COMENTARIOS ================= -->
+<section id="formulario" class="section">
+  <h2>Comentario</h2>
+
+  <h3>Deja tu comentario:</h3>
+  <textarea id="nuevoComentario" placeholder="Escribe tu opinión aquí..."></textarea>
+  <button onclick="agregarComentario()">Enviar</button>
+  <button onclick="borrarTodo()" style="background:#d6453d; margin-left:10px;">Borrar todo</button>
+
+  <h3 style="margin-top:25px;">Comentarios:</h3>
+  <div id="listaComentarios"></div>
+</section>
+
+<footer>
+  &copy; ICE CRAFT — Todos los derechos reservados
+</footer>
+
+<!-- ================= SCRIPTS ================= -->
+<script>
+  async function cargarComentarios() {
+    const respuesta = await fetch("http://localhost:3000/comentarios");
+    const comentarios = await respuesta.json();
+
+    const lista = document.getElementById("listaComentarios");
+    lista.innerHTML = "";
+
+    comentarios.forEach(c => {
+      const div = document.createElement("div");
+      div.className = "comentario";
+      div.textContent = c.texto + " — " + c.fecha;
+      lista.appendChild(div);
+    });
+  }
+
+  cargarComentarios();
+
+  async function agregarComentario() {
+    const textarea = document.getElementById("nuevoComentario");
+    const texto = textarea.value.trim();
+
+    if (texto === "") {
+      alert("Escribe un comentario.");
+      return;
+    }
+
+    await fetch("http://localhost:3000/comentarios", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ texto })
+    });
+
+    textarea.value = "";
+    cargarComentarios();
+  }
+
+  async function borrarTodo() {
+    if (!confirm("¿Seguro que quieres borrar TODOS los comentarios?")) return;
+
+    await fetch("http://localhost:3000/comentarios", {
+      method: "DELETE"
+    });
+
+    cargarComentarios();
+  }
+</script>
+
+</body>
+</html>

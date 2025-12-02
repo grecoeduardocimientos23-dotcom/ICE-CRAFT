@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eliminar Usuario</title>
+
+    <style>
+        body {
+            background: #f5c7a1;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .box {
+            background: white;
+            padding: 25px;
+            width: 320px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #0003;
+            text-align: center;
+        }
+
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #bbb;
+            font-size: 16px;
+        }
+
+        button {
+            background: #d9534f;
+            border: none;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background: #b52b27;
+        }
+
+        .volver {
+            background: #3a7df1;
+        }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h2>Eliminar Usuario</h2>
+
+    <input id="usuario" type="text" placeholder="Usuario a eliminar">
+
+    <button onclick="eliminarUsuario()">Eliminar</button>
+
+    <button class="volver" onclick="location.href='usuario.HTML'">Volver</button>
+</div>
+
+<script>
+function eliminarUsuario() {
+    const usuario = document.getElementById("usuario").value.trim();
+
+    if (!usuario) {
+        alert("Introduce el usuario a eliminar.");
+        return;
+    }
+
+    if (!confirm(`¿Seguro que deseas eliminar el usuario "${usuario}"?`)) return;
+
+    fetch("http://localhost:3000/usuarios/eliminar", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ usuario })
+    })
+    .then(res => res.json())
+    .then(data => {
+        alert(data.mensaje);
+    })
+    .catch(() => alert("Error al conectar con el servidor"));
+}
+</script>
+
+</body>
+</html>
