@@ -185,6 +185,15 @@ app.post("/compras", async (req, res) => {
     res.status(500).json({ ok: false, mensaje: "Error al registrar compra" });
   }
 });
+router.get("/", async (req, res) => {
+    try {
+        const compras = await Compra.find();
+        res.json(compras);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 
 app.get("/compras", async (req, res) => {
   console.log("📤 Enviando lista de compras...");
