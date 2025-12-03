@@ -4,23 +4,16 @@ const cors = require("cors");
 const path = require("path");
 
 const app = express();
-import path from "path";
-import express from "express";
-import cors from "cors";
 
-
-// Servir archivos estáticos
-app.use(express.static("public"));
-
-// Página principal
-app.get("/", (req, res) => {
-  res.sendFile(path.resolve("public/index.html"));
-});
-
-
-// Middlewares
+// ======================================
+// MIDDLEWARES
+// ======================================
 app.use(cors());
 app.use(express.json());
+
+// Servir archivos del frontend
+app.use(express.static("public"));
+
 
 // ======================================
 // 🔗 CONEXIÓN A MONGODB ATLAS
@@ -30,19 +23,6 @@ mongoose.connect(
 )
 .then(() => console.log("✔ Conectado a MongoDB Atlas"))
 .catch(err => console.log("❌ Error al conectar:", err));
-
-
-// ======================================
-// 📌 SERVIR ARCHIVOS DEL FRONTEND
-// ======================================
-
-// ARCHIVOS HTML, CSS, JS (ponlos en la carpeta /public/)
-app.use(express.static(path.join(__dirname, "public")));
-
-// SI ENTRAN A LA PÁGINA PRINCIPAL, MOSTRAR login.html
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "login.html"));
-});
 
 
 // ======================================
@@ -68,11 +48,28 @@ const Compra = mongoose.model("compras", {
   fecha: { type: Date, default: Date.now }
 });
 
+
 // ======================================
-// RUTAS
+// 📌 RUTAS DEL FRONTEND
 // ======================================
 
-// Ruta de prueba
+// Página principal (Render)
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+
+// Cualquier ruta HTML dentro de /public
+app.get("/:page", (req, res) => {
+  const file = req.params.page + ".html";
+  res.sendFile(path.join(__dirname, "public", file));
+});
+
+
+// ======================================
+// 📌 RUTAS DEL BACKEND (API)
+// ======================================
+
+// 🧪 Ruta de prueba
 app.get("/compras/test", (req, res) => {
   res.json({ ok: true, mensaje: "Ruta de pruebas funcionando en Render" });
 });
@@ -82,11 +79,14 @@ app.post("/register", async (req, res) => {
   try {
     const { nombre, email, password } = req.body;
 
-    if (!nombre || !email || !password)
+    if (!nombre || !email || !password) {
       return res.json({ ok: false, mensaje: "Faltan datos" });
+    }
 
     const existe = await Usuario.findOne({ email });
-    if (existe) return res.json({ ok: false, mensaje: "El correo ya existe" });
+    if (existe) {
+      return res.json({ ok: false, mensaje: "El correo ya existe" });
+    }
 
     const nuevo = new Usuario({ nombre, email, password });
     await nuevo.save();
@@ -114,8 +114,9 @@ app.post("/usuarios/login", async (req, res) => {
     const user = await Usuario.findOne({ nombre: usuario });
     if (!user) return res.json({ ok: false, mensaje: "Usuario no encontrado" });
 
-    if (user.password !== password)
+    if (user.password !== password) {
       return res.json({ ok: false, mensaje: "Contraseña incorrecta" });
+    }
 
     res.json({
       ok: true,
@@ -133,13 +134,13 @@ app.post("/usuarios/login", async (req, res) => {
 app.delete("/usuarios/eliminar", async (req, res) => {
   const { usuario } = req.body;
 
-  if (!usuario)
-    return res.json({ ok: false, mensaje: "Falta el usuario" });
+  if (!usuario) return res.json({ ok: false, mensaje: "Falta el usuario" });
 
   try {
     const eliminado = await Usuario.findOneAndDelete({ nombre: usuario });
-    if (!eliminado)
+    if (!eliminado) {
       return res.json({ ok: false, mensaje: "Usuario no encontrado" });
+    }
 
     res.json({ ok: true, mensaje: "Usuario eliminado correctamente" });
   } catch (err) {
@@ -182,8 +183,9 @@ app.post("/compras", async (req, res) => {
   try {
     const { usuario, producto, cantidad, total } = req.body;
 
-    if (!usuario || !producto || !cantidad || !total)
+    if (!usuario || !producto || !cantidad || !total) {
       return res.json({ ok: false, mensaje: "Faltan datos de compra" });
+    }
 
     const compra = new Compra({
       usuario,
@@ -219,8 +221,9 @@ app.put("/compras/:id", async (req, res) => {
       { new: true }
     );
 
-    if (!compraActualizada)
+    if (!compraActualizada) {
       return res.status(404).json({ ok: false, mensaje: "Compra no encontrada" });
+    }
 
     res.json({
       ok: true,
@@ -242,8 +245,9 @@ app.delete("/compras/:id", async (req, res) => {
   }
 });
 
+
 // ======================================
-// 🚀 INICIAR SERVIDOR (RENDER FRIENDLY)
+// 🚀 INICIAR SERVIDOR
 // ======================================
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
