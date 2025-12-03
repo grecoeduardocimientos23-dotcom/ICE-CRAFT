@@ -2,9 +2,9 @@
   "name": "cafeteria-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "server0.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node server0.js"
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
