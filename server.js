@@ -2,10 +2,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const path = require("path");
-const comprasRoutes = require("./routes/compras");
 
-app.use("/compras", comprasRoutes);
-const app = express();
+const app = express();   // ✔ SE DECLARA ANTES DE USAR app.use
 
 // ======================================
 // MIDDLEWARES
@@ -22,7 +20,7 @@ app.use(cors({
 // 🔗 CONEXIÓN A MONGODB ATLAS
 // ======================================
 mongoose.connect(
-  "mongodb+srv://Eduardocasares:casares1101@cluster0.n8e99xp.mongodb.net/IceCraft?retryWrites=true&w=majority&appName=Cluster0"
+  "mongodb+srv://Eduardocasares:casares1101@cluster0.n8e99xp.mongodb.net/IceCraft"
 )
 .then(() => console.log("✔ Conectado a MongoDB Atlas"))
 .catch(err => console.log("❌ Error al conectar:", err));
@@ -56,10 +54,6 @@ const Compra = mongoose.model("compras", {
 // ======================================
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "Public", "index.html"));
-});
-
-app.get("/:page", (req, res) => {
-  res.sendFile(path.join(__dirname, "Public", `${req.params.page}.html`));
 });
 
 // ======================================
