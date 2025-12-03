@@ -190,7 +190,7 @@ let idEditar = "";
 
 // ================= CARGAR COMPRAS =================
 window.cargarCompras = function () {
-    fetch("https://ice-craft-1.onrender.com/MENU.HTML")
+    fetch(API_URL)
         .then(res => res.json())
         .then(data => {
 
@@ -219,6 +219,7 @@ window.cargarCompras = function () {
         })
         .catch(err => console.log("❌ Error cargando compras:", err));
 }
+
 
 
 // ================ ABRIR MODAL EDITAR ================
