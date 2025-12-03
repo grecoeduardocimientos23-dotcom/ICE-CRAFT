@@ -86,7 +86,6 @@
             margin-right: 6px;
         }
 
-        /* ===== MODAL ===== */
         #modal, #modalAgregar {
             position: fixed;
             top: 0;
@@ -151,7 +150,7 @@
     </table>
 </div>
 
-<!-- ========== MODAL DE EDICIÓN ========== -->
+<!-- MODAL EDITAR -->
 <div id="modal">
     <div id="modal-content">
         <h3>Editar Compra</h3>
@@ -165,7 +164,7 @@
     </div>
 </div>
 
-<!-- ========== MODAL AGREGAR COMPRA ========== -->
+<!-- MODAL AGREGAR -->
 <div id="modalAgregar">
     <div id="modal-content">
         <h3>Registrar Compra Física</h3>
@@ -181,7 +180,12 @@
 </div>
 
 <script>
-const API_URL = "http://localhost:3000/compras";
+
+// ================================
+// 🔗 CAMBIO IMPORTANTE (Render)
+// ================================
+const API_URL = "https://ice-craft.onrender.com/compras";
+
 let idEditar = "";
 
 // ================= CARGAR COMPRAS =================
@@ -216,7 +220,7 @@ function cargarCompras() {
         });
 }
 
-// ==================== ABRIR MODAL EDITAR ====================
+// ================ ABRIR MODAL EDITAR ================
 function abrirModal(id, usuario, producto, cantidad, total) {
     idEditar = id;
 
@@ -228,7 +232,7 @@ function abrirModal(id, usuario, producto, cantidad, total) {
     document.getElementById("modal").style.display = "flex";
 }
 
-// ==================== GUARDAR EDICIÓN ====================
+// ================ GUARDAR EDICIÓN ================
 async function guardarCambios() {
     const datos = {
         usuario: document.getElementById("editUsuario").value.trim(),
@@ -239,7 +243,7 @@ async function guardarCambios() {
 
     const url = `${API_URL}/${idEditar}`;
     
-    const res = await fetch(url, {
+    await fetch(url, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(datos)
@@ -250,22 +254,24 @@ async function guardarCambios() {
     cargarCompras();
 }
 
-// ==================== ELIMINAR COMPRA ====================
+// ================ ELIMINAR COMPRA ================
 async function eliminarCompra(id) {
     if (!confirm("¿Marcar compra como completada?")) return;
 
-    await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+    await fetch(`${API_URL}/${id}`, {
+        method: "DELETE"
+    });
 
     alert("Compra marcada como completada");
     cargarCompras();
 }
 
-// ==================== ABRIR MODAL AGREGAR ====================
+// ================ ABRIR MODAL AGREGAR ================
 function abrirModalAgregar() {
     document.getElementById("modalAgregar").style.display = "flex";
 }
 
-// ==================== AGREGAR COMPRA ====================
+// ================ AGREGAR COMPRA ================
 async function agregarCompra() {
     const datos = {
         usuario: document.getElementById("addUsuario").value.trim(),
@@ -284,11 +290,11 @@ async function agregarCompra() {
     document.getElementById("modalAgregar").style.display = "none";
     cargarCompras();
 }
-// ==================== CANCELAR COMPRA ====================
+
+// ================ CANCELAR COMPRA ================
 function cancelarCompra() {
     document.getElementById("modalAgregar").style.display = "none";
 
-    // Opcional: limpiar campos
     document.getElementById("addUsuario").value = "";
     document.getElementById("addProducto").value = "";
     document.getElementById("addCantidad").value = "";

@@ -46,12 +46,17 @@ const Compra = mongoose.model("compras", {
 // 📌 RUTAS
 // ======================================
 
-// === Ruta principal ===
+// Ruta principal
 app.get("/", (req, res) => {
   res.send("Servidor funcionando correctamente 😎");
 });
 
-// === Registrar usuario ===
+// 🧪 Ruta de prueba (soluciona tu error)
+app.get("/compras/test", (req, res) => {
+  res.json({ ok: true, mensaje: "Ruta de pruebas funcionando en Render" });
+});
+
+// Registrar usuario
 app.post("/register", async (req, res) => {
   try {
     const { nombre, email, password } = req.body;
@@ -61,7 +66,6 @@ app.post("/register", async (req, res) => {
     }
 
     const existe = await Usuario.findOne({ email });
-
     if (existe) {
       return res.json({ ok: false, mensaje: "El correo ya existe" });
     }
@@ -75,12 +79,11 @@ app.post("/register", async (req, res) => {
   }
 });
 
-// === LOGIN ===
+// LOGIN
 app.post("/usuarios/login", async (req, res) => {
   const { usuario, password } = req.body;
 
   try {
-    // ADMIN
     if (usuario === "admin" && password === "1234") {
       return res.json({
         ok: true,
@@ -91,15 +94,13 @@ app.post("/usuarios/login", async (req, res) => {
     }
 
     const user = await Usuario.findOne({ nombre: usuario });
-    if (!user) {
-      return res.json({ ok: false, mensaje: "Usuario no encontrado" });
-    }
+    if (!user) return res.json({ ok: false, mensaje: "Usuario no encontrado" });
 
     if (user.password !== password) {
       return res.json({ ok: false, mensaje: "Contraseña incorrecta" });
     }
 
-    return res.json({
+    res.json({
       ok: true,
       mensaje: "Login correcto",
       nombre: user.nombre,
@@ -111,17 +112,14 @@ app.post("/usuarios/login", async (req, res) => {
   }
 });
 
-// === ELIMINAR USUARIO ===
+// Eliminar usuario
 app.delete("/usuarios/eliminar", async (req, res) => {
   const { usuario } = req.body;
 
-  if (!usuario) {
-    return res.json({ ok: false, mensaje: "Falta el usuario" });
-  }
+  if (!usuario) return res.json({ ok: false, mensaje: "Falta el usuario" });
 
   try {
     const eliminado = await Usuario.findOneAndDelete({ nombre: usuario });
-
     if (!eliminado) {
       return res.json({ ok: false, mensaje: "Usuario no encontrado" });
     }
@@ -132,11 +130,10 @@ app.delete("/usuarios/eliminar", async (req, res) => {
   }
 });
 
-// === Guardar comentario ===
+// Guardar comentario
 app.post("/comentarios", async (req, res) => {
   try {
     const { texto } = req.body;
-
     if (!texto) return res.json({ ok: false, mensaje: "Comentario vacío" });
 
     const nuevo = new Comentario({
@@ -145,26 +142,25 @@ app.post("/comentarios", async (req, res) => {
     });
 
     await nuevo.save();
-
     res.json({ ok: true, mensaje: "Comentario guardado correctamente" });
   } catch (err) {
     res.json({ ok: false, mensaje: "Error al guardar comentario" });
   }
 });
 
-// === Obtener comentarios ===
+// Obtener comentarios
 app.get("/comentarios", async (req, res) => {
   const lista = await Comentario.find();
   res.json(lista);
 });
 
-// === Eliminar todos los comentarios ===
+// Eliminar comentarios
 app.delete("/comentarios", async (req, res) => {
   await Comentario.deleteMany({});
   res.json({ ok: true, mensaje: "Todos los comentarios fueron eliminados" });
 });
 
-// === Registrar compra ===
+// Registrar compra
 app.post("/compras", async (req, res) => {
   try {
     const { usuario, producto, cantidad, total } = req.body;
@@ -188,7 +184,7 @@ app.post("/compras", async (req, res) => {
   }
 });
 
-// === Obtener compras ===
+// Obtener compras
 app.get("/compras", async (req, res) => {
   try {
     const compras = await Compra.find().sort({ fecha: -1 });
@@ -198,7 +194,7 @@ app.get("/compras", async (req, res) => {
   }
 });
 
-// === Actualizar compra por ID ===
+// Actualizar compra
 app.put("/compras/:id", async (req, res) => {
   try {
     const compraActualizada = await Compra.findByIdAndUpdate(
@@ -221,7 +217,7 @@ app.put("/compras/:id", async (req, res) => {
   }
 });
 
-// === Eliminar compra por ID ===
+// Eliminar compra
 app.delete("/compras/:id", async (req, res) => {
   try {
     await Compra.findByIdAndDelete(req.params.id);
@@ -231,10 +227,10 @@ app.delete("/compras/:id", async (req, res) => {
   }
 });
 
-
 // ======================================
-// 🚀 INICIAR SERVIDOR
+// 🚀 INICIAR SERVIDOR (RENDER FRIENDLY)
 // ======================================
-app.listen(3000, () => {
-  console.log("🚀 Servidor funcionando en http://localhost:3000");
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log("🚀 Servidor funcionando en puerto " + PORT);
 });

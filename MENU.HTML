@@ -305,7 +305,7 @@ function enviarCompra(producto, precio) {
         total: precio
     };
 
-    fetch("http://localhost:3000/compras", {
+    fetch("https://ice-craft.onrender.com/compras", {  
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(datos)
@@ -316,11 +316,10 @@ function enviarCompra(producto, precio) {
 }
 </script>
 
-
-
 <div class="regresar">
   <a href="CAFETERIA1.HTML">Regresar</a>
 </div>
 
 </body>
 </html>
+

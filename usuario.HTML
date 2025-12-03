@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,7 +26,8 @@
             text-align: center;
         }
 
-        input, select, button {
+        input,
+        button {
             width: 100%;
             padding: 10px;
             margin: 10px 0;
@@ -52,65 +54,65 @@
         }
     </style>
 </head>
+
 <body>
 
-<div class="login-box">
-    <h2>Iniciar Sesión</h2>
+    <div class="login-box">
+        <h2>Iniciar Sesión</h2>
 
-    <input id="usuario" type="text" placeholder="Usuario">
-    <input id="password" type="password" placeholder="Contraseña">
+        <input id="usuario" type="text" placeholder="Usuario">
+        <input id="password" type="password" placeholder="Contraseña">
 
-    <button onclick="login()">Entrar</button>
+        <button onclick="login()">Entrar</button>
 
-    <button class="link" onclick="location.href='nuevo_usu.html'">
-        Crear nuevo usuario
-    </button>
+        <button class="link" onclick="location.href='nuevo_usu.html'">
+            Crear nuevo usuario
+        </button>
 
-    <button class="link" style="background:#d9534f" onclick="location.href='eliminar_usu.html'">
-    Eliminar usuario
-</button>
+        <button class="link" style="background:#d9534f" onclick="location.href='eliminar_usu.html'">
+            Eliminar usuario
+        </button>
+    </div>
 
-</div>
+    <script>
+        function login() {
+            const usuario = document.getElementById("usuario").value.trim();
+            const password = document.getElementById("password").value.trim();
 
-<script>
-function login() {
-    const usuario = document.getElementById("usuario").value.trim();
-    const password = document.getElementById("password").value.trim();
+            if (!usuario || !password) {
+                alert("Por favor llena todos los campos.");
+                return;
+            }
 
-    if (!usuario || !password) {
-        alert("Por favor llena todos los campos.");
-        return;
-    }
+            // 👉 URL REAL DE TU SERVIDOR EN RENDER
+            const URL_BACKEND = "https://ice-craft.onrender.com/login/usuario";
 
-    // ⚠️ PON AQUÍ LA URL REAL DE RENDER
-    const URL_BACKEND = "https://TU-PROYECTO.onrender.com/LOGIN/USUARIO";
+            fetch(URL_BACKEND, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ usuario, password })
+            })
+                .then(res => res.json())
+                .then(data => {
 
-    fetch(URL_BACKEND, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ usuario, password })
-    })
-    .then(res => res.json())
-    .then(data => {
+                    if (!data.ok) {
+                        alert(data.mensaje || "Usuario o contraseña incorrectos");
+                        return;
+                    }
 
-        if (!data.ok) {
-            alert(data.mensaje || "Usuario o contraseña incorrectos");
-            return;
+                    localStorage.setItem("usuario", data.nombre);
+
+                    if (data.rol === "admin") {
+                        window.location.href = "informe.html";
+                    } else {
+                        window.location.href = "CAFETERIA1.html";
+                    }
+                })
+                .catch(() => alert("Error al conectar con el servidor"));
         }
-
-        localStorage.setItem("usuario", data.nombre);
-
-        if (data.rol === "admin") {
-            window.location.href = "informe.html";
-        } else {
-            window.location.href = "CAFETERIA1.HTML";
-        }
-    })
-    .catch(() => alert("Error al conectar con el servidor"));
-}
-</script>
-
-
+    </script>
 
 </body>
+
 </html>
+

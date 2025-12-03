@@ -64,6 +64,9 @@
 </div>
 
 <script>
+
+const API = "https://ice-craft.onrender.com";
+
 function eliminarUsuario() {
     const usuario = document.getElementById("usuario").value.trim();
 
@@ -74,7 +77,7 @@ function eliminarUsuario() {
 
     if (!confirm(`¿Seguro que deseas eliminar el usuario "${usuario}"?`)) return;
 
-    fetch("http://localhost:3000/usuarios/eliminar", {
+    fetch(`${API}/usuarios/eliminar`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ usuario })
@@ -85,7 +88,9 @@ function eliminarUsuario() {
     })
     .catch(() => alert("Error al conectar con el servidor"));
 }
+
 </script>
 
 </body>
 </html>
+

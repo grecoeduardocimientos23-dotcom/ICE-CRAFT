@@ -238,8 +238,10 @@
 
 <!-- ================= SCRIPTS ================= -->
 <script>
+  const API = "https://ice-craft.onrender.com";
+
   async function cargarComentarios() {
-    const respuesta = await fetch("http://localhost:3000/comentarios");
+    const respuesta = await fetch(`${API}/comentarios`);
     const comentarios = await respuesta.json();
 
     const lista = document.getElementById("listaComentarios");
@@ -264,7 +266,7 @@
       return;
     }
 
-    await fetch("http://localhost:3000/comentarios", {
+    await fetch(`${API}/comentarios`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ texto })
@@ -277,13 +279,14 @@
   async function borrarTodo() {
     if (!confirm("¿Seguro que quieres borrar TODOS los comentarios?")) return;
 
-    await fetch("http://localhost:3000/comentarios", {
+    await fetch(`${API}/comentarios`, {
       method: "DELETE"
     });
 
     cargarComentarios();
   }
 </script>
+
 
 </body>
 </html>
