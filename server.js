@@ -4,6 +4,19 @@ const cors = require("cors");
 const path = require("path");
 
 const app = express();
+import path from "path";
+import express from "express";
+import cors from "cors";
+
+
+// Servir archivos estáticos
+app.use(express.static("public"));
+
+// Página principal
+app.get("/", (req, res) => {
+  res.sendFile(path.resolve("public/index.html"));
+});
+
 
 // Middlewares
 app.use(cors());
