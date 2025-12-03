@@ -12,7 +12,7 @@ app.use(cors());
 app.use(express.json());
 
 // Servir archivos del frontend
-app.use(express.static("public"));
+app.use(express.static("Public"));
 
 
 // ======================================
@@ -55,14 +55,14 @@ const Compra = mongoose.model("compras", {
 
 // Página principal (Render)
 app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/public/index.html");
+  res.sendFile(__dirname + "/Public/index.html");
 });
 
 
 // Cualquier ruta HTML dentro de /public
 app.get("/:page", (req, res) => {
   const file = req.params.page + ".html";
-  res.sendFile(path.join(__dirname, "public", file));
+  res.sendFile(path.join(__dirname, "Public", file));
 });
 
 
