@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const Compra = require("../models/Compra");
+const comprasRoutes = require("./routes/compras");
+app.use("/compras", comprasRoutes);
 
 // ➤ OBTENER TODAS LAS COMPRAS
 router.get("/", async (req, res) => {
