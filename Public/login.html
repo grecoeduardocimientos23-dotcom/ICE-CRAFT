@@ -75,42 +75,58 @@
     </div>
 
     <script>
-        function login() {
-            const usuario = document.getElementById("usuario").value.trim();
-            const password = document.getElementById("password").value.trim();
+    async function login() {
+        const usuario = document.getElementById("usuario").value.trim();
+        const password = document.getElementById("password").value.trim();
 
-            if (!usuario || !password) {
-                alert("Por favor llena todos los campos.");
+        if (!usuario || !password) {
+            alert("Por favor llena todos los campos.");
+            return;
+        }
+
+        const URL_BACKEND = "https://ice-craft-1.onrender.com";
+
+        try {
+            const res = await fetch(`${URL_BACKEND}/usuarios/login`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ usuario, password })
+            });
+
+            // IMPORTANTE: verificar si el backend responde JSON válido
+            if (!res.ok) {
+                alert("Servidor respondió con un error HTTP");
                 return;
             }
 
-            // 👉 URL REAL DE TU SERVIDOR EN RENDER
-            const URL_BACKEND = "https://ice-craft-1.onrender.com";
+            const data = await res.json();
 
-            fetch(`${URL_BACKEND}/usuarios/login`, {
-            method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ usuario, password })
-            })
-                .then(res => res.json())
-                .then(data => {
+            console.log("Respuesta servidor:", data);
 
-                    if (!data.ok) {
-                        alert(data.mensaje || "Usuario o contraseña incorrectos");
-                        return;
-                    }
+            if (!data.ok) {
+                alert(data.mensaje || "Usuario o contraseña incorrectos");
+                return;
+            }
 
-                    localStorage.setItem("usuario", data.nombre);
+            // guardamos el usuario en localStorage
+            localStorage.setItem("usuario", data.nombre);
 
-                    if (data.rol === "admin") {
-                        window.location.href = "informe.html";
-                    } else {
-                        window.location.href = "CAFETERIA1.html";
-                    }
-                })
-                .catch(() => alert("Error al conectar con el servidor"));
+            // redirigimos según el rol
+            if (data.rol === "admin") {
+                window.location.href = "informe.html";
+            } else {
+                window.location.href = "CAFETERIA1.html";
+            }
+
+        } catch (error) {
+            console.error("Error en conexión:", error);
+            alert("❗ No se pudo conectar con el servidor");
         }
-    </script>
+    }
+</script>
+
 
 </body>
 
