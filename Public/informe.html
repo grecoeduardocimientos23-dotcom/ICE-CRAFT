@@ -184,13 +184,13 @@
 // ================================
 // 🔗 CAMBIO IMPORTANTE (Render)
 // ================================
-const API_URL = "https://ice-craft-1.onrender.com/informe.html";
+const API_URL = "https://ice-craft-1.onrender.com/compras";
 
 let idEditar = "";
 
 // ================= CARGAR COMPRAS =================
 window.cargarCompras = function () {
-    fetch("https://ice-craft-1.onrender.com/compras")
+    fetch("https://ice-craft-1.onrender.com/informe.html")
         .then(res => res.json())
         .then(data => {
 
