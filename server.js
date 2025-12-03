@@ -55,8 +55,9 @@ const Compra = mongoose.model("compras", {
 
 // Página principal (Render)
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
+  res.sendFile(__dirname + "/public/index.html");
 });
+
 
 // Cualquier ruta HTML dentro de /public
 app.get("/:page", (req, res) => {
