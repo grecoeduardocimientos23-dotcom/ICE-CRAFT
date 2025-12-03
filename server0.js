@@ -3,12 +3,10 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 
 const app = express();
-app.use(express.json());
-app.use(cors());
-app.put("/compras/test", (req, res) => {
-  res.json({ ok: true, test: "Ruta PUT funcionando" });
-});
 
+// Middlewares
+app.use(cors());
+app.use(express.json());
 
 // ======================================
 // 🔗 CONEXIÓN A MONGODB ATLAS
@@ -19,10 +17,10 @@ mongoose.connect(
 .then(() => console.log("✔ Conectado a MongoDB Atlas"))
 .catch(err => console.log("❌ Error al conectar:", err));
 
+
 // ======================================
 // MODELOS
 // ======================================
-
 const Usuario = mongoose.model("usuarios", {
   nombre: String,
   email: String,
@@ -34,12 +32,23 @@ const Comentario = mongoose.model("comentarios", {
   texto: String,
   fecha: String
 });
+
 const Compra = mongoose.model("compras", {
   usuario: String,
   producto: String,
   cantidad: Number,
   total: Number,
   fecha: { type: Date, default: Date.now }
+});
+
+
+// ======================================
+// 📌 RUTAS
+// ======================================
+
+// === Ruta principal ===
+app.get("/", (req, res) => {
+  res.send("Servidor funcionando correctamente 😎");
 });
 
 // === Registrar usuario ===
@@ -212,7 +221,6 @@ app.put("/compras/:id", async (req, res) => {
   }
 });
 
-
 // === Eliminar compra por ID ===
 app.delete("/compras/:id", async (req, res) => {
   try {
@@ -222,15 +230,11 @@ app.delete("/compras/:id", async (req, res) => {
     res.json({ ok: false, mensaje: "Error al eliminar compra" });
   }
 });
-app.get("/", (req, res) => {
-  res.send("Servidor funcionando correctamente 😎");
-});
+
 
 // ======================================
-// INICIAR SERVIDOR
+// 🚀 INICIAR SERVIDOR
 // ======================================
 app.listen(3000, () => {
   console.log("🚀 Servidor funcionando en http://localhost:3000");
 });
-
-

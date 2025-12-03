@@ -82,7 +82,10 @@ function login() {
         return;
     }
 
-    fetch("http://localhost:3000/usuarios/login", {
+    // ⚠️ PON AQUÍ LA URL REAL DE RENDER
+    const URL_BACKEND = "https://TU-PROYECTO.onrender.com/LOGIN/USUARIO";
+
+    fetch(URL_BACKEND, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ usuario, password })
@@ -95,10 +98,8 @@ function login() {
             return;
         }
 
-        // Guardamos sesión
         localStorage.setItem("usuario", data.nombre);
 
-        // REDIRECCIÓN SEGÚN ROL
         if (data.rol === "admin") {
             window.location.href = "informe.html";
         } else {
@@ -108,6 +109,8 @@ function login() {
     .catch(() => alert("Error al conectar con el servidor"));
 }
 </script>
+
+
 
 </body>
 </html>
