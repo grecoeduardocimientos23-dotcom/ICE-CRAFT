@@ -2,7 +2,9 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const path = require("path");
+const comprasRoutes = require("./routes/compras");
 
+app.use("/compras", comprasRoutes);
 const app = express();
 
 // ======================================
