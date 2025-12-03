@@ -95,25 +95,16 @@
                 body: JSON.stringify({ usuario, password })
             });
 
-            // IMPORTANTE: verificar si el backend responde JSON válido
-            if (!res.ok) {
-                alert("Servidor respondió con un error HTTP");
-                return;
-            }
-
             const data = await res.json();
-
-            console.log("Respuesta servidor:", data);
+            console.log("Respuesta del servidor:", data);
 
             if (!data.ok) {
                 alert(data.mensaje || "Usuario o contraseña incorrectos");
                 return;
             }
 
-            // guardamos el usuario en localStorage
             localStorage.setItem("usuario", data.nombre);
 
-            // redirigimos según el rol
             if (data.rol === "admin") {
                 window.location.href = "informe.html";
             } else {
@@ -121,11 +112,12 @@
             }
 
         } catch (error) {
-            console.error("Error en conexión:", error);
-            alert("❗ No se pudo conectar con el servidor");
+            console.error("Error de conexión:", error);
+            alert("Error al conectar con el servidor");
         }
     }
 </script>
+
 
 
 </body>
