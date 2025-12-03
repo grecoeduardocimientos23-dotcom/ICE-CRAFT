@@ -85,10 +85,10 @@
             }
 
             // 👉 URL REAL DE TU SERVIDOR EN RENDER
-            const URL_BACKEND = "https://ice-craft-1.onrender.com/usuarios/login";
+            const URL_BACKEND = "https://ice-craft-1.onrender.com";
 
-            fetch(URL_BACKEND, {
-                method: "POST",
+            fetch(`${URL_BACKEND}/usuarios/login`, {
+            method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ usuario, password })
             })
