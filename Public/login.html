@@ -90,10 +90,17 @@
             const res = await fetch(`${URL_BACKEND}/usuarios/login`, {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
                 },
                 body: JSON.stringify({ usuario, password })
             });
+
+            // Verifica problema de conexión REAL
+            if (!res.ok) {
+                alert(`Servidor respondió con error HTTP ${res.status}`);
+                return;
+            }
 
             const data = await res.json();
             console.log("Respuesta del servidor:", data);
@@ -113,10 +120,11 @@
 
         } catch (error) {
             console.error("Error de conexión:", error);
-            alert("Error al conectar con el servidor");
+            alert("❗ No se pudo conectar con el servidor (Render puede estar dormido). Intenta de nuevo en 20 segundos.");
         }
     }
 </script>
+
 
 
 
