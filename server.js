@@ -49,65 +49,58 @@ const Compra = mongoose.model("compras", {
   fecha: { type: Date, default: Date.now }
 });
 
-
 // ======================================
-// 📌 RUTAS DEL FRONTEND
+// 📌 RUTAS FRONTEND
 // ======================================
-
-// Página principal
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "Public", "index.html"));
 });
 
-// Cargar cualquier archivo HTML
 app.get("/:page", (req, res) => {
   res.sendFile(path.join(__dirname, "Public", `${req.params.page}.html`));
 });
 
-
 // ======================================
-// 📌 RUTAS BACKEND (API)
+// 📌 RUTAS BACKEND
 // ======================================
 
-// ✔ Ruta de prueba
+// Prueba API
 app.get("/compras/test", (req, res) => {
   res.json({ ok: true, mensaje: "API funcionando correctamente 👍" });
 });
 
-
 // ======================================
-// REGISTRO
+// REGISTRO USUARIO
 // ======================================
 app.post("/register", async (req, res) => {
   try {
     const { nombre, email, password } = req.body;
 
     if (!nombre || !email || !password)
-      return res.json({ ok: false, mensaje: "Faltan datos" });
+      return res.status(400).json({ ok: false, mensaje: "Faltan datos" });
 
     const existe = await Usuario.findOne({ email });
     if (existe)
-      return res.json({ ok: false, mensaje: "El correo ya existe" });
+      return res.status(409).json({ ok: false, mensaje: "El correo ya existe" });
 
     await new Usuario({ nombre, email, password }).save();
 
-    res.json({ ok: true, mensaje: "Usuario registrado correctamente" });
+    res.status(200).json({ ok: true, mensaje: "Usuario registrado correctamente" });
 
   } catch (err) {
-    res.json({ ok: false, mensaje: "Error al registrar usuario" });
+    res.status(500).json({ ok: false, mensaje: "Error al registrar usuario" });
   }
 });
 
-
 // ======================================
-// LOGIN (FUNCIONA con nombre O email)
+// LOGIN
 // ======================================
 app.post("/usuarios/login", async (req, res) => {
-
   const { usuario, password } = req.body;
 
   try {
-    // SUPERADMIN
+    console.log("Intentando login de:", usuario);
+
     if (usuario === "admin" && password === "1234") {
       return res.json({
         ok: true,
@@ -117,7 +110,6 @@ app.post("/usuarios/login", async (req, res) => {
       });
     }
 
-    // Buscar por NOMBRE o EMAIL
     const user = await Usuario.findOne({
       $or: [{ nombre: usuario }, { email: usuario }]
     });
@@ -137,32 +129,9 @@ app.post("/usuarios/login", async (req, res) => {
     });
 
   } catch (err) {
-    res.json({ ok: false, mensaje: "Error en el servidor" });
+    res.status(500).json({ ok: false, mensaje: "Error en el servidor" });
   }
 });
-
-
-// ======================================
-// ELIMINAR USUARIO
-// ======================================
-app.delete("/usuarios/eliminar", async (req, res) => {
-  const { usuario } = req.body;
-
-  if (!usuario)
-    return res.json({ ok: false, mensaje: "Falta el usuario" });
-
-  try {
-    const eliminado = await Usuario.findOneAndDelete({ nombre: usuario });
-
-    if (!eliminado)
-      return res.json({ ok: false, mensaje: "Usuario no encontrado" });
-
-    res.json({ ok: true, mensaje: "Usuario eliminado correctamente" });
-  } catch {
-    res.json({ ok: false, mensaje: "Error al eliminar usuario" });
-  }
-});
-
 
 // ======================================
 // COMENTARIOS
@@ -189,12 +158,6 @@ app.get("/comentarios", async (req, res) => {
   res.json(await Comentario.find());
 });
 
-app.delete("/comentarios", async (req, res) => {
-  await Comentario.deleteMany({});
-  res.json({ ok: true, mensaje: "Todos los comentarios fueron eliminados" });
-});
-
-
 // ======================================
 // COMPRAS
 // ======================================
@@ -202,59 +165,51 @@ app.post("/compras", async (req, res) => {
   try {
     const { usuario, producto, cantidad, total } = req.body;
 
+    console.log("📩 Nueva compra recibida:", req.body);
+
     if (!usuario || !producto || !cantidad || !total)
-      return res.json({ ok: false, mensaje: "Faltan datos de compra" });
+      return res.status(400).json({ ok: false, mensaje: "Faltan datos de compra" });
 
     await new Compra({
       usuario,
       producto,
       cantidad: Number(cantidad),
-      total: Number(total)
+      total: Number(total),
+      fecha: new Date()
     }).save();
 
-    res.json({ ok: true, mensaje: "Compra registrada correctamente" });
+    res.status(200).json({ ok: true, mensaje: "Compra registrada correctamente" });
 
-  } catch {
-    res.json({ ok: false, mensaje: "Error al registrar compra" });
+  } catch (err) {
+    console.log("❌ Error al registrar compra:", err);
+    res.status(500).json({ ok: false, mensaje: "Error al registrar compra" });
   }
 });
 
 app.get("/compras", async (req, res) => {
+  console.log("📤 Enviando lista de compras...");
   res.json(await Compra.find().sort({ fecha: -1 }));
 });
 
 app.put("/compras/:id", async (req, res) => {
   try {
-    const compraActualizada = await Compra.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true }
-    );
+    await Compra.findByIdAndUpdate(req.params.id, req.body);
+    res.json({ ok: true });
 
-    if (!compraActualizada)
-      return res.json({ ok: false, mensaje: "Compra no encontrada" });
-
-    res.json({
-      ok: true,
-      mensaje: "Compra actualizada correctamente",
-      compra: compraActualizada
-    });
-
-  } catch (err) {
-    res.json({ ok: false, mensaje: "Error al actualizar compra" });
+  } catch {
+    res.json({ ok: false });
   }
 });
 
 app.delete("/compras/:id", async (req, res) => {
   try {
     await Compra.findByIdAndDelete(req.params.id);
-    res.json({ ok: true, mensaje: "Compra eliminada" });
+    res.json({ ok: true });
 
   } catch {
-    res.json({ ok: false, mensaje: "Error al eliminar compra" });
+    res.json({ ok: false });
   }
 });
-
 
 // ======================================
 // 🚀 INICIAR SERVIDOR

@@ -190,11 +190,19 @@ let idEditar = "";
 
 // ================= CARGAR COMPRAS =================
 function cargarCompras() {
-    fetch(API_URL)
+    fetch("https://ice-craft-1.onrender.com/compras")
         .then(res => res.json())
         .then(data => {
+
+            console.log("📦 Compras recibidas desde el servidor:", data);
+
             const cuerpo = document.getElementById("bodyTabla");
             cuerpo.innerHTML = "";
+
+            if (!Array.isArray(data)) {
+                console.error("❌ ERROR: el servidor no devolvió un arreglo de compras");
+                return;
+            }
 
             data.forEach(c => {
                 const fila = `
@@ -217,8 +225,12 @@ function cargarCompras() {
                 </tr>`;
                 cuerpo.innerHTML += fila;
             });
+        })
+        .catch(err => {
+            console.error("❌ Error al conectar con el servidor de compras:", err);
         });
 }
+
 
 // ================ ABRIR MODAL EDITAR ================
 function abrirModal(id, usuario, producto, cantidad, total) {
@@ -280,17 +292,25 @@ async function agregarCompra() {
         total: Number(document.getElementById("addTotal").value)
     };
 
-    await fetch(API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(datos)
-    });
+    try {
+        const res = await fetch(API_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(datos)
+        });
 
-    alert("Compra registrada");
-    document.getElementById("modalAgregar").style.display = "none";
-    cargarCompras();
+        const data = await res.json();
+        console.log("RESPUESTA:", data);
+
+        alert(data.mensaje || "Compra registrada");
+        document.getElementById("modalAgregar").style.display = "none";
+        cargarCompras();
+
+    } catch (error) {
+        alert("Error al conectarse con el servidor");
+        console.error(error);
+    }
 }
-
 // ================ CANCELAR COMPRA ================
 function cancelarCompra() {
     document.getElementById("modalAgregar").style.display = "none";
