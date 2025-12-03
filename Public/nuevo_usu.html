@@ -71,50 +71,53 @@
         <input id="confirmarContraseña" type="password" placeholder="Confirmar contraseña" required>
 
         <button onclick="registrar()">Registrar</button>
-        <button class="btn-regresar" onclick="location.href='usuario.html'">Regresar</button>
+        <button class="btn-regresar" onclick="location.href='login.html'">Regresar</button>
     </div>
 
     <script>
 
-        // URL DE TU API EN RENDER
-        const API = "https://ice-craft-1.onrender.com/register";
+    // URL correcta del servidor
+    const API = "https://ice-craft-1.onrender.com";
 
-        function registrar() {
-            const usuario = document.getElementById('nuevoUsuario').value.trim();
-            const correo = document.getElementById('nuevoCorreo').value.trim();
-            const pass = document.getElementById('nuevaContraseña').value.trim();
-            const confirm = document.getElementById('confirmarContraseña').value.trim();
+    function registrar() {
+        const usuario = document.getElementById('nuevoUsuario').value.trim();
+        const correo = document.getElementById('nuevoCorreo').value.trim();
+        const pass = document.getElementById('nuevaContraseña').value.trim();
+        const confirm = document.getElementById('confirmarContraseña').value.trim();
 
-            if (!usuario || !correo || !pass || !confirm) {
-                alert('Por favor llena todos los campos.');
-                return;
-            }
-
-            if (pass !== confirm) {
-                alert('Las contraseñas no coinciden.');
-                return;
-            }
-
-            fetch(`${API}/register`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    nombre: usuario,
-                    email: correo,
-                    password: pass
-                })
-            })
-            .then(res => res.json())
-            .then(data => {
-                alert(data.mensaje);
-
-                if (data.ok) {
-                    location.href = "login.html";
-                }
-            })
-            .catch(() => alert("Error al conectar con el servidor"));
+        if (!usuario || !correo || !pass || !confirm) {
+            alert('Por favor llena todos los campos.');
+            return;
         }
-    </script>
+
+        if (pass !== confirm) {
+            alert('Las contraseñas no coinciden.');
+            return;
+        }
+
+        fetch(`${API}/register`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                nombre: usuario,
+                email: correo,
+                password: pass
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            alert(data.mensaje);
+
+            if (data.ok) {
+                // REDIRIGIR A LOGIN
+                window.location.href = "login.html";
+            }
+        })
+        .catch(() => alert("Error al conectar con el servidor"));
+    }
+
+</script>
+
 </body>
 </html>
 
