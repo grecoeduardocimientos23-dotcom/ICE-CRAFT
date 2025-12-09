@@ -7,55 +7,107 @@
 
     <style>
         body {
-            background: #f5c7a1;
-            font-family: Arial, sans-serif;
+            margin: 0;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
+            font-family: "Poppins", sans-serif;
+            background: linear-gradient(135deg, #ffb88c, #ff7755);
+            overflow: hidden;
         }
 
+        /* Animación de fondo */
+        .bg-decor {
+            position: absolute;
+            width: 180%;
+            height: 180%;
+            background: radial-gradient(circle at 30% 20%, #ffffff44, transparent),
+                        radial-gradient(circle at 80% 70%, #ffffff33, transparent);
+            animation: movimiento 8s infinite alternate ease-in-out;
+        }
+
+        @keyframes movimiento {
+            0% { transform: translate(-5%, -5%); }
+            100% { transform: translate(5%, 5%); }
+        }
+
+        /* Caja principal */
         .box {
-            background: white;
-            padding: 30px;
-            width: 350px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px #0003;
+            position: relative;
+            background: rgba(255, 255, 255, 0.25);
+            padding: 40px;
+            width: 380px;
+            border-radius: 18px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+            backdrop-filter: blur(12px);
             text-align: center;
+            z-index: 2;
+            animation: aparecer .7s ease-out;
+        }
+
+        @keyframes aparecer {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        h2 {
+            color: #4d2e1f;
+            margin-bottom: 25px;
+            font-size: 26px;
+        }
+
+        .logo {
+            width: 90px;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 4px 6px #0004);
         }
 
         button {
             width: 100%;
             padding: 13px;
-            margin: 10px 0;
-            border-radius: 6px;
+            margin: 12px 0;
+            border-radius: 8px;
             border: none;
             background: #ff914d;
             color: white;
             font-size: 18px;
             cursor: pointer;
-            transition: 0.2s;
+            transition: 0.25s;
+            box-shadow: 0 4px 12px #ff914d88;
         }
 
         button:hover {
-            background: #d76d2a;
+            transform: scale(1.05);
+            background: #e1712a;
+            box-shadow: 0 6px 20px #ff914daa;
         }
 
-        h2 {
-            margin-bottom: 20px;
+        /* Línea decorativa */
+        .linea {
+            width: 80px;
+            height: 4px;
+            background: #ff914d;
+            margin: 10px auto 20px;
+            border-radius: 3px;
         }
     </style>
 </head>
+
 <body>
 
+<div class="bg-decor"></div>
+
 <div class="box">
+    <img src="https://cdn-icons-png.flaticon.com/512/924/924514.png" alt="Logo" class="logo">
     <h2>Bienvenido a Ice Craft</h2>
+
+    <div class="linea"></div>
 
     <button onclick="location.href='login.html'">Iniciar Sesión</button>
     <button onclick="location.href='nuevo_usu.html'">Crear Usuario</button>
-    <button onclick="location.href='eliminar_usu.html'">Eliminar Usuario</button>
 </div>
 
 </body>
 </html>
+
