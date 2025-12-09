@@ -330,7 +330,7 @@ function abrirModalAgregar() {
 // ================ AGREGAR COMPRA ================
 async function agregarCompra() {
    const datos = {
-    usuario: localStorage.getItem("usuarioNombre"),
+    usuario: localStorage.getItem("usuario"),
     producto: document.getElementById("addProducto").value.trim(),
     cantidad: Number(document.getElementById("addCantidad").value),
     total: Number(document.getElementById("addTotal").value)
