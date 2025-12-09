@@ -250,7 +250,7 @@ window.cargarCompras = function () {
             data.forEach(c => {
                 cuerpo.innerHTML += `
                 <tr>
-                    <td>${c.usuario}</td>
+                    <td>${c.usuario === "Invitado" ? localStorage.getItem("usuario") : c.usuario}</td>
                     <td>${c.producto}</td>
                     <td>${c.cantidad}</td>
                     <td>$${c.total}</td>
@@ -330,7 +330,7 @@ function abrirModalAgregar() {
 // ================ AGREGAR COMPRA ================
 async function agregarCompra() {
    const datos = {
-    usuario: localStorage.getItem("usuario"),
+    usuario: localStorage.getItem("usuarioNombre"),
     producto: document.getElementById("addProducto").value.trim(),
     cantidad: Number(document.getElementById("addCantidad").value),
     total: Number(document.getElementById("addTotal").value)
