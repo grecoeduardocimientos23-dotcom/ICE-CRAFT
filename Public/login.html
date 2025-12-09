@@ -1,134 +1,181 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | Cafetería</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login | Ice Craft</title>
 
-    <style>
-        body {
-            background: #f5c7a1;
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
-        .login-box {
-            background: white;
-            padding: 25px;
-            width: 320px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px #0003;
-            text-align: center;
-        }
+<style>
+    body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(135deg, #ffb17a, #ff914d);
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        animation: fadeIn 1s ease-in-out;
+    }
 
-        input,
-        button {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
-            border: 1px solid #bbb;
-            font-size: 16px;
-        }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: scale(0.95); }
+        to { opacity: 1; transform: scale(1); }
+    }
 
-        button {
-            background: #ff914d;
-            border: none;
-            color: white;
-            cursor: pointer;
-            transition: 0.2s;
-        }
+    .login-box {
+        width: 350px;
+        background: #ffffffee;
+        padding: 30px;
+        border-radius: 18px;
+        box-shadow: 0 15px 30px #0004;
+        text-align: center;
+        backdrop-filter: blur(10px);
+        animation: floatUp 0.7s ease-out;
+    }
 
-        button:hover {
-            background: #d76d2a;
-        }
+    @keyframes floatUp {
+        from { transform: translateY(25px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
 
-        .link {
-            background: #3a7df1;
-            margin-top: 10px;
-        }
-    </style>
+    .login-box h2 {
+        font-size: 26px;
+        color: #333;
+        margin-bottom: 25px;
+        font-weight: 600;
+    }
+
+    input {
+        width: 100%;
+        padding: 12px;
+        margin: 12px 0;
+        border: 2px solid #ddd;
+        border-radius: 10px;
+        font-size: 15px;
+        transition: .3s;
+    }
+
+    input:focus {
+        border-color: #ff914d;
+        outline: none;
+        box-shadow: 0 0 8px #ff914d77;
+    }
+
+    button {
+        width: 100%;
+        padding: 12px;
+        margin-top: 15px;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: .3s;
+    }
+
+    .btn-primary {
+        background: #ff7b25;
+        color: white;
+        box-shadow: 0 5px 10px #ff7b2555;
+    }
+
+    .btn-primary:hover {
+        background: #e66816;
+        transform: scale(1.03);
+    }
+
+    .btn-link {
+        background: #3a7df1;
+        color: white;
+    }
+
+    .btn-link:hover {
+        background: #1f5fce;
+        transform: scale(1.03);
+    }
+
+    .btn-danger {
+        background: #e64545;
+        color: white;
+    }
+
+    .btn-danger:hover {
+        background: #c72e2e;
+        transform: scale(1.03);
+    }
+</style>
 </head>
 
 <body>
 
-    <div class="login-box">
-        <h2>Iniciar Sesión</h2>
+<div class="login-box">
+    <h2>Inicio de Sesión</h2>
 
-        <input id="usuario" type="text" placeholder="Usuario">
-        <input id="password" type="password" placeholder="Contraseña">
+    <input id="usuario" type="text" placeholder="Usuario">
+    <input id="password" type="password" placeholder="Contraseña">
 
-        <button onclick="login()">Entrar</button>
+    <button class="btn-primary" onclick="login()">Entrar</button>
 
-        <button class="link" onclick="location.href='nuevo_usu.html'">
-            Crear nuevo usuario
-        </button>
+    <button class="btn-link" onclick="location.href='nuevo_usu.html'">
+        Crear nuevo usuario
+    </button>
 
-        <button class="link" style="background:#d9534f" onclick="location.href='eliminar_usu.html'">
-            Eliminar usuario
-        </button>
-    </div>
+    <button class="btn-danger" onclick="location.href='eliminar_usu.html'">
+        Eliminar usuario
+    </button>
+</div>
 
-    <script>
-    async function login() {
-        const usuario = document.getElementById("usuario").value.trim();
-        const password = document.getElementById("password").value.trim();
+<script>
+async function login() {
+    const usuario = document.getElementById("usuario").value.trim();
+    const password = document.getElementById("password").value.trim();
 
-        if (!usuario || !password) {
-            alert("Por favor llena todos los campos.");
+    if (!usuario || !password) {
+        alert("Por favor llena todos los campos.");
+        return;
+    }
+
+    const URL_BACKEND = "https://ice-craft-1.onrender.com";
+
+    try {
+        const res = await fetch(`${URL_BACKEND}/usuarios/login`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify({ usuario, password })
+        });
+
+        if (!res.ok) {
+            alert(`Error del servidor: ${res.status}`);
             return;
         }
 
-        const URL_BACKEND = "https://ice-craft-1.onrender.com";
+        const data = await res.json();
+        console.log("Respuesta:", data);
 
-        try {
-            const res = await fetch(`${URL_BACKEND}/usuarios/login`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json"
-                },
-                body: JSON.stringify({ usuario, password })
-            });
-
-            // Verifica problema de conexión REAL
-            if (!res.ok) {
-                alert(`Servidor respondió con error HTTP ${res.status}`);
-                return;
-            }
-
-            const data = await res.json();
-            console.log("Respuesta del servidor:", data);
-
-            if (!data.ok) {
-                alert(data.mensaje || "Usuario o contraseña incorrectos");
-                return;
-            }
-
-            localStorage.setItem("usuario", data.nombre);
-
-            if (data.rol === "admin") {
-                window.location.href = 'informe.html';
-            } else {
-                window.location.href = 'CAFETERIA1.HTML';
-            }
-
-        } catch (error) {
-            console.error("Error de conexión:", error);
-            alert("❗ No se pudo conectar con el servidor (Render puede estar dormido). Intenta de nuevo en 20 segundos.");
+        if (!data.ok) {
+            alert(data.mensaje || "Usuario o contraseña incorrectos");
+            return;
         }
+
+        localStorage.setItem("usuario", data.nombre);
+
+        if (data.rol === "admin") {
+            window.location.href = "informe.html";
+        } else {
+            window.location.href = "CAFETERIA1.html";
+        }
+
+    } catch (error) {
+        console.error("Error:", error);
+        alert("No se pudo conectar con el servidor. Intenta en unos segundos.");
     }
+}
 </script>
 
-
-
-
 </body>
-
 </html>
-
