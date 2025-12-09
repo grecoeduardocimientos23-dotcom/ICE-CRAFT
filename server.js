@@ -93,6 +93,7 @@ app.post("/register", async (req, res) => {
 // ======================================
 app.post("/usuarios/login", async (req, res) => {
   const { usuario, password } = req.body;
+
   try {
     console.log("Intentando login de:", usuario);
 
@@ -124,6 +125,7 @@ app.post("/usuarios/login", async (req, res) => {
     });
 
   } catch (err) {
+    console.log("❌ Error en login:", err);
     res.status(500).json({ ok: false, mensaje: "Error en el servidor" });
   }
 });
