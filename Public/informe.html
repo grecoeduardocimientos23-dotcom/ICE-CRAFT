@@ -3,38 +3,49 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Informes de Compra</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Historial de Compras - Ice Craft</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --bg: #f7e5d8;
-            --primary: #b86d47;
-            --primary-dark: #8c4f30;
-            --success: #318313;
-            --danger-dark: #b52b27;
+            --bg: #f5e9df;
+            --primary: #c27a4a;
+            --primary-dark: #9b5d38;
+            --info: #1d74c7;
+            --success: #2a8c36;
+            --danger: #d6453d;
+            --cancel: #555;
         }
 
         body {
             background: var(--bg);
             padding: 30px;
             font-family: "Poppins", sans-serif;
+            animation: fadeIn 0.6s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         h2 {
             text-align: center;
             color: var(--primary-dark);
-            font-size: 2rem;
-            margin-bottom: 20px;
+            font-size: 2.3rem;
+            margin-bottom: 25px;
+            font-weight: 700;
+            text-shadow: 0px 1px 2px rgba(0,0,0,0.2);
         }
 
         .contenedor {
-            width: 90%;
+            width: 92%;
             margin: auto;
             padding: 20px;
             background: white;
-            border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            border-radius: 15px;
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+            animation: fadeIn 0.8s ease;
         }
 
         .btn {
@@ -47,18 +58,25 @@
             font-size: 1rem;
             margin-bottom: 15px;
             margin-right: 10px;
+            transition: 0.3s;
+            font-weight: 600;
         }
 
         .btn:hover {
             background: var(--primary-dark);
+            transform: scale(1.05);
         }
+
         .volver {
             background: #3a7df1;
+            margin-top: 15px;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
+            overflow: hidden;
+            border-radius: 12px;
         }
 
         thead {
@@ -69,7 +87,21 @@
         th, td {
             padding: 12px;
             text-align: center;
-            border-bottom: 1px solid #ddd;
+            border-bottom: 1px solid #eee;
+        }
+
+        tr:hover {
+            background: #f9d9c9;
+            transition: 0.3s;
+        }
+
+        .btn-editar {
+            background: var(--info);
+            padding: 7px 14px;
+            border-radius: 6px;
+            border: none;
+            color: white;
+            transition: 0.3s;
         }
 
         .btn-eliminar {
@@ -78,64 +110,83 @@
             border-radius: 6px;
             border: none;
             color: white;
+            transition: 0.3s;
         }
 
-        .btn-editar {
-            background: #1d74c7;
+        .btn-cancelar {
+            background: var(--danger);
             padding: 7px 14px;
             border-radius: 6px;
             border: none;
             color: white;
-            margin-right: 6px;
+            transition: 0.3s;
         }
 
+        .btn-editar:hover, .btn-eliminar:hover, .btn-cancelar:hover {
+            transform: scale(1.1);
+            opacity: 0.9;
+        }
+
+        /* ========================= MODALES ========================= */
         #modal, #modalAgregar {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.55);
+            background: rgba(0,0,0,0.55);
             display: none;
             justify-content: center;
             align-items: center;
+            animation: fadeIn 0.4s ease;
         }
 
-        #modal-content {
+        .modal-content {
             background: white;
-            padding: 20px;
-            width: 350px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            padding: 25px;
+            width: 380px;
+            border-radius: 15px;
+            box-shadow: 0 6px 25px rgba(0,0,0,0.25);
+            animation: scaleIn 0.3s ease;
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
 
         input {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             margin: 8px 0;
-            border: 1px solid #aaa;
-            border-radius: 6px;
+            border: 1px solid #bbb;
+            border-radius: 7px;
+            font-size: 1rem;
         }
 
         #btnGuardar, #btnAgregarCompra, #btnCancelarCompra {
             background: var(--primary);
             width: 100%;
-            padding: 10px;
+            padding: 11px;
             margin-top: 10px;
             border: none;
             color: white;
-            border-radius: 6px;
+            border-radius: 7px;
+        }
+
+        #btnCancelarCompra {
+            background: #888;
         }
     </style>
 </head>
 
 <body>
 
-<h2>Historial de Compras</h2>
+<h2>📋 Historial de Compras</h2>
 
 <div class="contenedor">
-    <button class="btn" onclick="cargarCompras()">Cargar Informes</button>
-    <button class="btn" onclick="abrirModalAgregar()">Registrar Compra</button>
+    <button class="btn" onclick="cargarCompras()">🔄 Cargar Informes</button>
+    <button class="btn" onclick="abrirModalAgregar()">➕ Registrar Compra</button>
 
     <table>
         <thead>
@@ -153,10 +204,10 @@
     </table>
 </div>
 
-<!-- MODAL EDITAR -->
+<!-- ================== MODAL EDITAR ================== -->
 <div id="modal">
-    <div id="modal-content">
-        <h3>Editar Compra</h3>
+    <div class="modal-content">
+        <h3>✏ Editar Compra</h3>
 
         <input id="editUsuario" placeholder="Usuario">
         <input id="editProducto" placeholder="Producto">
@@ -167,10 +218,10 @@
     </div>
 </div>
 
-<!-- MODAL AGREGAR -->
+<!-- ================== MODAL AGREGAR ================== -->
 <div id="modalAgregar">
-    <div id="modal-content">
-        <h3>Registrar Compra Física</h3>
+    <div class="modal-content">
+        <h3>🛒 Registrar Compra Física</h3>
 
         <input id="addUsuario" placeholder="Usuario">
         <input id="addProducto" placeholder="Producto">
@@ -184,11 +235,7 @@
 
 <script>
 
-// ================================
-// 🔗 CAMBIO IMPORTANTE (Render)
-// ================================
 const API_URL = "https://ice-craft-1.onrender.com/compras";
-
 let idEditar = "";
 
 // ================= CARGAR COMPRAS =================
@@ -196,8 +243,6 @@ window.cargarCompras = function () {
     fetch(API_URL)
         .then(res => res.json())
         .then(data => {
-
-            console.log("✔ Datos recibidos:", data);
 
             const cuerpo = document.getElementById("bodyTabla");
             cuerpo.innerHTML = "";
@@ -211,11 +256,11 @@ window.cargarCompras = function () {
                     <td>$${c.total}</td>
                     <td>${new Date(c.fecha).toLocaleString()}</td>
                     <td>
-                        <button class="btn-editar"
-                            onclick="abrirModal('${c._id}', '${c.usuario}', '${c.producto}', '${c.cantidad}', '${c.total}')">
-                            Editar
-                        </button>
+                        <button class="btn-editar" onclick="abrirModal('${c._id}', '${c.usuario}', '${c.producto}', '${c.cantidad}', '${c.total}')">Editar</button>
+
                         <button class="btn-eliminar" onclick="eliminarCompra('${c._id}')">Completado</button>
+
+                        <button class="btn-cancelar" onclick="cancelarPedido('${c._id}')">Cancelar Pedido</button>
                     </td>
                 </tr>`;
             });
@@ -223,7 +268,17 @@ window.cargarCompras = function () {
         .catch(err => console.log("❌ Error cargando compras:", err));
 }
 
+// ================ CANCELAR PEDIDO ================
+async function cancelarPedido(id) {
+    if (!confirm("¿Seguro que deseas CANCELAR este pedido?")) return;
 
+    await fetch(`${API_URL}/cancelar/${id}`, {
+        method: "PUT"
+    });
+
+    alert("Pedido cancelado correctamente.");
+    cargarCompras();
+}
 
 // ================ ABRIR MODAL EDITAR ================
 function abrirModal(id, usuario, producto, cantidad, total) {
@@ -246,9 +301,7 @@ async function guardarCambios() {
         total: Number(document.getElementById("editTotal").value)
     };
 
-    const url = `${API_URL}/${idEditar}`;
-    
-    await fetch(url, {
+    await fetch(`${API_URL}/${idEditar}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(datos)
@@ -259,19 +312,17 @@ async function guardarCambios() {
     cargarCompras();
 }
 
-// ================ ELIMINAR COMPRA ================
+// ================ ELIMINAR COMPRA (COMPLETADO) ================
 async function eliminarCompra(id) {
     if (!confirm("¿Marcar compra como completada?")) return;
 
-    await fetch(`${API_URL}/${id}`, {
-        method: "DELETE"
-    });
+    await fetch(`${API_URL}/${id}`, { method: "DELETE" });
 
-    alert("Compra marcada como completada");
+    alert("Compra completada");
     cargarCompras();
 }
 
-// ================ ABRIR MODAL AGREGAR ================
+// ================ MODAL AGREGAR ================
 function abrirModalAgregar() {
     document.getElementById("modalAgregar").style.display = "flex";
 }
@@ -285,26 +336,20 @@ async function agregarCompra() {
         total: Number(document.getElementById("addTotal").value)
     };
 
-    try {
-        const res = await fetch(API_URL, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(datos)
-        });
+    const res = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(datos)
+    });
 
-        const data = await res.json();
-        console.log("RESPUESTA:", data);
+    const resultado = await res.json();
+    alert(resultado.mensaje || "Compra registrada");
 
-        alert(data.mensaje || "Compra registrada");
-        document.getElementById("modalAgregar").style.display = "none";
-        cargarCompras();
-
-    } catch (error) {
-        alert("Error al conectarse con el servidor");
-        console.error(error);
-    }
+    document.getElementById("modalAgregar").style.display = "none";
+    cargarCompras();
 }
-// ================ CANCELAR COMPRA ================
+
+// ================ CANCELAR MODAL AGREGAR ================
 function cancelarCompra() {
     document.getElementById("modalAgregar").style.display = "none";
 
@@ -315,6 +360,8 @@ function cancelarCompra() {
 }
 
 </script>
-<button class="volver" onclick="location.href='login.html'">Volver</button>
+
+<button class="btn volver" onclick="location.href='login.html'">⬅ Volver</button>
+
 </body>
 </html>
