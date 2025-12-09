@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Ice Craft - Cafetería</title>
+  <title>Cafetería Ice Craft</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- Google Fonts -->
@@ -10,12 +10,11 @@
 
   <style>
     :root {
-      --bg: #f4ebe8;
-      --primary: #c4927c;
-      --primary-dark: #a47462;
-      --text-dark: #2c2c2c;
-      --text-light: #6f6f6f;
-      --card: #ffffff;
+      --bg: #f7f2ed;
+      --primary: #d4a48f;
+      --primary-dark: #b5836a;
+      --text-dark: #2e2e2e;
+      --card: #fff;
       --accent: #8b5e3c;
     }
 
@@ -28,9 +27,7 @@
 
     body {
       background: var(--bg);
-      color: var(--text-dark);
-      overflow-x: hidden;
-      animation: fadeIn 1s ease-in;
+      animation: fadeIn .9s ease-in-out;
     }
 
     @keyframes fadeIn {
@@ -38,49 +35,47 @@
       to { opacity: 1; }
     }
 
-    /*------------ HEADER -------------*/
+    /* HEADER */
     header {
       background: var(--primary);
       padding: 25px;
       text-align: center;
-      font-size: 32px;
-      color: black;
+      color: #fff;
+      font-size: 34px;
       font-weight: 700;
-      box-shadow: 0 2px 15px rgba(0,0,0,0.15);
+      letter-spacing: 1px;
+      box-shadow: 0 3px 15px rgba(0,0,0,0.18);
       position: sticky;
       top: 0;
-      z-index: 100;
+      z-index: 50;
     }
 
     nav {
       margin-top: 10px;
     }
-
     nav a {
       margin: 0 15px;
-      text-decoration: none;
+      color: white;
       font-weight: 600;
-      color: #fff;
+      text-decoration: none;
       transition: .3s;
     }
-
     nav a:hover {
       color: var(--accent);
     }
 
-    /*------------ SECCIONES -------------*/
+    /* SECTIONS */
     .section {
       max-width: 900px;
-      margin: 50px auto;
-      background: var(--card);
+      margin: 45px auto;
       padding: 35px;
+      background: var(--card);
       border-radius: 15px;
-      box-shadow: 0 4px 25px rgba(0,0,0,0.12);
+      box-shadow: 0 3px 20px rgba(0,0,0,0.12);
       transition: .3s;
     }
-
     .section:hover {
-      transform: translateY(-5px);
+      transform: translateY(-4px);
     }
 
     h2 {
@@ -88,13 +83,13 @@
       margin-bottom: 15px;
       color: var(--primary-dark);
       font-size: 28px;
-      font-weight: 700;
     }
 
     p {
-      font-size: 1.1rem;
-      color: var(--text-dark);
+      font-size: 1.08rem;
       text-align: justify;
+      color: var(--text-dark);
+      line-height: 1.6;
     }
 
     .img-center {
@@ -104,66 +99,59 @@
     }
 
     .img-center img {
+      width: 250px;
       border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      box-shadow: 0 5px 18px rgba(0,0,0,0.2);
     }
 
-    /*------------ COMENTARIOS -------------*/
+    /* COMENTARIOS */
     textarea {
       width: 100%;
       height: 90px;
-      padding: 12px;
       border-radius: 10px;
+      padding: 12px;
       border: 1px solid #ccc;
-      resize: none;
-      font-size: 1rem;
-      outline: none;
       transition: .3s;
     }
-
     textarea:focus {
       border-color: var(--primary-dark);
-      box-shadow: 0 0 8px rgba(196,146,124,0.4);
+      box-shadow: 0 0 8px rgba(0,0,0,0.2);
+      outline: none;
     }
 
     button {
-      padding: 12px 20px;
+      padding: 12px 18px;
       border: none;
       border-radius: 8px;
-      background-color: var(--primary-dark);
+      background: var(--primary-dark);
       color: white;
-      font-size: 1rem;
       cursor: pointer;
-      transition: .3s;
       font-weight: 600;
-      margin-top: 10px;
+      transition: .3s;
     }
-
     button:hover {
       background: var(--accent);
     }
 
     .comentario {
-      background: #f4f4f4;
+      background: #f8f8f8;
       padding: 12px;
       border-radius: 10px;
-      margin-top: 10px;
-      animation: slideIn .3s ease;
+      margin-top: 12px;
+      animation: slide .4s ease;
     }
-
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateY(10px); }
+    @keyframes slide {
+      from { opacity: 0; transform: translateY(12px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /*------------ FOOTER -------------*/
+    /* FOOTER */
     footer {
-      margin-top: 50px;
+      margin-top: 45px;
       background: var(--accent);
       color: white;
       text-align: center;
-      padding: 20px;
-      font-size: 1.1rem;
+      padding: 18px;
     }
   </style>
 </head>
@@ -173,10 +161,10 @@
 <header>
   CAFETERÍA ICE CRAFT
   <nav>
-    <a href="#inicio">INTRODUCCIÓN</a>
-    <a href="#historia">HISTORIA</a>
-    <a href="#menu">MENÚ</a>
-    <a href="#formulario">COMENTARIOS</a>
+    <a href="#inicio">Introducción</a>
+    <a href="#historia">Historia</a>
+    <a href="#menu">Menú</a>
+    <a href="#comentarios">Comentarios</a>
   </nav>
 </header>
 
@@ -184,14 +172,11 @@
 <section id="inicio" class="section">
   <h2>Introducción</h2>
   <p>
-   En nuestra cafetería buscamos ofrecer un ambiente cómodo, cálido y totalmente agradable, donde cada persona pueda disfrutar de una
-    deliciosa taza de café y sentirse en un espacio especial. Nos enfocamos en cuidar cada detalle, desde la selección de ingredientes 
-    y la preparación de nuestras bebidas, hasta la ambientación del lugar y la atención que brindamos. Queremos que cada visita sea más
-   que una simple parada: que sea un momento de paz, de disfrute y de conexión. 
-   Nuestro objetivo es que cada cliente viva una experiencia única, auténtica y llena de sabor, que lo invite a regresar una y otra vez.
+    En Ice Craft ofrecemos un ambiente cálido, relajado y lleno de sabor. Cada bebida está preparada con dedicación,
+    buscando que tu visita sea un momento especial. Queremos que disfrutes un espacio pensado para ti.
   </p>
   <div class="img-center">
-    <img src="" width="250" height="150">
+    <img src="">
   </div>
 </section>
 
@@ -199,94 +184,79 @@
 <section id="historia" class="section">
   <h2>Historia</h2>
   <p>
-   Fundada en 2002 por los esposos Vargas, Ice Craft nació como un sueño familiar que buscaba combinar el amor por las bebidas dulces
-    con un ambiente realmente acogedor. Lo que comenzó como una pequeña idea entre conversaciones y recetas caseras,
-     pronto se convirtió en un proyecto lleno de pasión y dedicación. Desde sus primeros días,la cafetería 
-    fue creada para ser mucho más que un lugar donde tomar café: queríamos ofrecer un espacio donde las personas pudieran relajarse,
-     compartir momentos especiales y sentirse como en casa. Con el paso de los años, Ice Craft ha crecido,
-    pero nunca ha perdido su esencia familiar ni ese toque cálido que hace que cada visitante se sienta bienvenido desde que cruza la puerta.
+    Fundada en 2002, Ice Craft nació como un sueño familiar. Con el tiempo hemos crecido sin perder nuestra esencia acogedora,
+    manteniendo siempre el objetivo de ofrecer calidad, comodidad y un sabor que te haga volver.
   </p>
-  <div class="img-center">
-    <img src="" width="220" height="140">
-  </div>
 </section>
 
 <!-- ================= MENÚ ================= -->
 <section id="menu" class="section">
   <h2>Menú</h2>
   <p style="text-align:center;">
-    <a href='MENU.HTML' style="color: var(--accent); font-size:1.2rem; font-weight:600;">Ver Menú Completo</a>
+    <a href="MENU.html" style="font-size: 1.2rem; color: var(--accent); font-weight: 700;">Ver Menú Completo</a>
   </p>
 </section>
 
 <!-- ================= COMENTARIOS ================= -->
-<section id="formulario" class="section">
-  <h2>Comentario</h2>
+<section id="comentarios" class="section">
+  <h2>Comentarios</h2>
 
-  <h3>Deja tu comentario:</h3>
   <textarea id="nuevoComentario" placeholder="Escribe tu opinión aquí..."></textarea>
   <button onclick="agregarComentario()">Enviar</button>
   <button onclick="borrarTodo()" style="background:#d6453d; margin-left:10px;">Borrar todo</button>
 
-  <h3 style="margin-top:25px;">Comentarios:</h3>
+  <h3 style="margin-top:25px;">Comentarios recientes:</h3>
   <div id="listaComentarios"></div>
 </section>
 
-<footer>
-  &copy; ICE CRAFT — Todos los derechos reservados
-</footer>
+<footer>© 2025 Ice Craft — Todos los derechos reservados</footer>
 
-<!-- ================= SCRIPTS ================= -->
+<!-- ================= JS ================= -->
 <script>
-  const API = "https://ice-craft-1.onrender.com/comentarios";
+  const URL = "https://ice-craft-1.onrender.com";
 
   async function cargarComentarios() {
-    const respuesta = await fetch(`${API}/comentarios`);
-    const comentarios = await respuesta.json();
+    const res = await fetch(`${URL}/comentarios`);
+    const lista = await res.json();
 
-    const lista = document.getElementById("listaComentarios");
-    lista.innerHTML = "";
+    const contenedor = document.getElementById("listaComentarios");
+    contenedor.innerHTML = "";
 
-    comentarios.forEach(c => {
+    lista.forEach(c => {
       const div = document.createElement("div");
       div.className = "comentario";
       div.textContent = c.texto + " — " + c.fecha;
-      lista.appendChild(div);
+      contenedor.appendChild(div);
     });
   }
 
   cargarComentarios();
 
   async function agregarComentario() {
-    const textarea = document.getElementById("nuevoComentario");
-    const texto = textarea.value.trim();
+    const texto = document.getElementById("nuevoComentario").value.trim();
 
-    if (texto === "") {
-      alert("Escribe un comentario.");
-      return;
-    }
+    if (!texto) return alert("Escribe un comentario.");
 
-    await fetch(`${API}/comentarios`, {
+    await fetch(`${URL}/comentarios`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ texto })
     });
 
-    textarea.value = "";
+    document.getElementById("nuevoComentario").value = "";
     cargarComentarios();
   }
 
   async function borrarTodo() {
-    if (!confirm("¿Seguro que quieres borrar TODOS los comentarios?")) return;
+    if (!confirm("¿Seguro que deseas borrar todos los comentarios?")) return;
 
-    await fetch(`${API}/comentarios`, {
+    await fetch(`${URL}/comentarios`, {
       method: "DELETE"
     });
 
     cargarComentarios();
   }
 </script>
-
 
 </body>
 </html>
