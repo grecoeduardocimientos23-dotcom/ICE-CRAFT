@@ -329,12 +329,13 @@ function abrirModalAgregar() {
 
 // ================ AGREGAR COMPRA ================
 async function agregarCompra() {
-    const datos = {
-        usuario: document.getElementById("addUsuario").value.trim(),
-        producto: document.getElementById("addProducto").value.trim(),
-        cantidad: Number(document.getElementById("addCantidad").value),
-        total: Number(document.getElementById("addTotal").value)
-    };
+   const datos = {
+    usuario: localStorage.getItem("usuarioNombre"),
+    producto: document.getElementById("addProducto").value.trim(),
+    cantidad: Number(document.getElementById("addCantidad").value),
+    total: Number(document.getElementById("addTotal").value)
+};
+
 
     const res = await fetch(API_URL, {
         method: "POST",
