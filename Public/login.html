@@ -127,7 +127,7 @@
 async function login() {
     const usuario = document.getElementById("usuario").value.trim();
     const password = document.getElementById("password").value.trim();
-
+  localStorage.setItem("usuarioNombre", usuarioIngresado);
     if (!usuario || !password) {
         alert("Por favor llena todos los campos.");
         return;

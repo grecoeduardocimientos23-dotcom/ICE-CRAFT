@@ -93,7 +93,6 @@ app.post("/register", async (req, res) => {
 // ======================================
 app.post("/usuarios/login", async (req, res) => {
   const { usuario, password } = req.body;
-  localStorage.setItem("usuarioNombre", usuarioIngresado);
   try {
     console.log("Intentando login de:", usuario);
 
