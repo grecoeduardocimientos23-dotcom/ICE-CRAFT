@@ -154,8 +154,8 @@ async function login() {
         }
 
         // Guardar el nombre del usuario correctamente
-        localStorage.setItem("usuario", data.nombre);
-        localStorage.setItem("usuarioRol", data.rol);
+        localStorage.setItem("usuario", usuario); 
+
 
         // Redirección según rol
         if (data.rol === "admin") {
