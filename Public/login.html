@@ -127,7 +127,7 @@
 async function login() {
     const usuario = document.getElementById("usuario").value.trim();
     const password = document.getElementById("password").value.trim();
-  localStorage.setItem("usuarioNombre", usuarioIngresado);
+
     if (!usuario || !password) {
         alert("Por favor llena todos los campos.");
         return;
@@ -145,11 +145,6 @@ async function login() {
             body: JSON.stringify({ usuario, password })
         });
 
-        if (!res.ok) {
-            alert(`Error del servidor: ${res.status}`);
-            return;
-        }
-
         const data = await res.json();
         console.log("Respuesta:", data);
 
@@ -158,8 +153,11 @@ async function login() {
             return;
         }
 
+        // Guardar el nombre del usuario correctamente
         localStorage.setItem("usuario", data.nombre);
+        localStorage.setItem("usuarioRol", data.rol);
 
+        // Redirección según rol
         if (data.rol === "admin") {
             window.location.href = "informe.html";
         } else {
@@ -172,6 +170,7 @@ async function login() {
     }
 }
 </script>
+
 
 </body>
 </html>
