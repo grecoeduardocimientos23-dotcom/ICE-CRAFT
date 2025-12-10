@@ -250,7 +250,7 @@ window.cargarCompras = function () {
             data.forEach(c => {
                 cuerpo.innerHTML += `
                 <tr>
-                    <td>${c.usuario === "Invitado" ? localStorage.getItem("usuario") : c.usuario}</td>
+                    <td>${c.usuario === "Invitado" ? localStorage.getItem("usuario", usuario) : c.usuario}</td>
                     <td>${c.producto}</td>
                     <td>${c.cantidad}</td>
                     <td>$${c.total}</td>
